@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct SettingView: View {
-    @State var timerValue = 10
+    //永続化する秒数(初期値は10)
+    @AppStorage("timer_value") var timerValue = 10
     var body: some View {
         ZStack {
             Color("backgroundSetting")

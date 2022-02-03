@@ -11,6 +11,7 @@ struct ContentView: View {
     @State var timerHandler : Timer? //Timer型のtimerHandlerという変数
     @State var count = 0 //カウント(経過時間)の変数
     @AppStorage("timer_value") var timerValue = 10 //永続化(データを保存)する秒数設定 (初期値は10)
+    @State var showAlert = false
     
     var body: some View {
         NavigationView {
@@ -65,6 +66,12 @@ struct ContentView: View {
                     }
                 }
             } // -- toolbar
+            //状態変数showAlertがtrueになった時に実行される
+            .alert(isPresented: $showAlert) {
+                Alert(title: Text("終了"),
+                      message: Text("タイマー終了時間です"),
+                      dismissButton: .default(Text("OK")))
+            }
         }// -- NavigationView
         //iPadへ対応
         .navigationViewStyle(StackNavigationViewStyle())
@@ -77,6 +84,8 @@ struct ContentView: View {
         if timerValue - count <= 0 {
             //タイマー停止
             timerHandler?.invalidate()
+            //アラート表示するか否かを示すブール型の変数をtrueに書き換え
+            showAlert = true
         }
     } // -- countDownTimer
     
@@ -111,3 +120,4 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
